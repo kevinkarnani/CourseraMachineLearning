@@ -84,15 +84,13 @@ J = J + lambda/(2 * m) * (sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end)
 for row = 1:m
     a1 = [1 X(row,:)]';
     z2 = Theta1 * a1;
-    a2 = sigmoid(z2);
-    a2 = [1; a2];
+    a2 = [1; sigmoid(z2)];
     z3 = Theta2 * a2;
     a3 = sigmoid(z3);
  
     z2 = [1; z2];
     delta3 = a3 - yk'(:, row);
-    delta2 = (Theta2' * delta3) .* sigmoidGradient(z2);
-    delta2 = delta2(2:end);
+    delta2 = ((Theta2' * delta3) .* sigmoidGradient(z2))(2:end);
  
     Theta1_grad = Theta1_grad + delta2 * a1';
     Theta2_grad = Theta2_grad + delta3 * a2';
